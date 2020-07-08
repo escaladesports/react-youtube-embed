@@ -32,10 +32,11 @@ function getId(str){
 
 class YouTubeEmbed extends React.Component {
 	render(){
-		const { appendSrc, aspectRatio, id, prependSrc, width, ...props} = this.props;
-		const embedLink = prependSrc + getId(id) + appendSrc
+		const { appendSrc, aspectRatio, id, prependSrcWithCookie, prependSrcWithoutCookie, noCookie, width, ...props} = this.props;
+		const embedLinkPrefix = (noCookie === true) ? prependSrcWithoutCookie : prependSrcWithCookie;
+		const embedLink = embedLinkPrefix + getId(id) + appendSrc;
 		return (
-			<div 
+			<div
 				style={{
 					position: `relative`,
 					paddingBottom: getPadding(aspectRatio),
@@ -66,7 +67,9 @@ class YouTubeEmbed extends React.Component {
 
 YouTubeEmbed.defaultProps = {
 	aspectRatio: `56.25%`,
-	prependSrc: `https://www.youtube.com/embed/`,
+	prependSrcWithCookie: `https://www.youtube.com/embed/`,
+	prependSrcWithoutCookie: `https://www.youtube-nocookie.com/embed/`,
+  	noCookie: false,
 	appendSrc: ``,
 }
 
